@@ -110,6 +110,8 @@ with st.form("inputform"):
         else:
             data[i] = col[k%5].number_input(f"**{i}**" + f" :red[(importance: {round(float(inputs[i]), 3)})]", step=0.001, value=round(df.iloc[0][i], 3)+0.001-0.001)
         k = k+1
+
+    st.session_state.predata = data
     
     output = col[5].selectbox("**:red[Output class]**", [1, 0])
     
@@ -126,8 +128,6 @@ with st.form("inputform"):
     
     c1 = st.columns(3)
     bt = c1[1].form_submit_button("**Start prediction**", use_container_width=True, type="primary")
-
-st.session_state.predata = data
 
 def prefun(output_index):
     r_p = float(model.predict_proba(pred_data)[0][output_index])
