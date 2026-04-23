@@ -89,6 +89,11 @@ st.markdown(f'''
     <h1 style="text-align: center; font-size: 26px; font-weight: bold; color: white; background: #01579B; border-radius: 0.5rem; margin-bottom: 15px;">
         {title}
     </h1>''', unsafe_allow_html=True)
+    
+if "predata" not in st.session_state:
+    st.session_state.predata = None
+else:
+    pass
 
 data = {}
 with st.form("inputform"):
@@ -122,11 +127,7 @@ with st.form("inputform"):
     c1 = st.columns(3)
     bt = c1[1].form_submit_button("**Start prediction**", use_container_width=True, type="primary")
 
- 
-if "predata" not in st.session_state:
-    st.session_state.predata = data
-else:
-    pass
+st.session_state.predata = data
 
 def prefun(output_index):
     r_p = float(model.predict_proba(pred_data)[0][output_index])
