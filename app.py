@@ -6,7 +6,7 @@ import numpy as np
 import joblib
 import shap
 
-title = "Sarcopenic Obesity Risk Prediction System for Hemodialysis Patients"
+title = "Sarcopenic Obesity Identification System for Hemodialysis Patients"
 
 @st.cache_resource
 def load_data():
@@ -127,7 +127,7 @@ with st.form("inputform"):
     st.table(pred_data1)
     
     c1 = st.columns(3)
-    bt = c1[1].form_submit_button("**Start prediction**", use_container_width=True, type="primary")
+    bt = c1[1].form_submit_button("**Start calculation**", use_container_width=True, type="primary")
 
 def prefun(output_index):
     r_p = float(model.predict_proba(pred_data)[0][output_index])
@@ -135,7 +135,7 @@ def prefun(output_index):
     proba = round(r_p*100, 3)
     
     with st.expander("**Result of prediction**", True):
-        st.html(f"<div style='font-weight: bold; text-align: center;'>{'Probability of sarcopenic obesity:' if output_index else 'Probability of non-sarcopenic obesity:'} {proba}%.</div><div style='text-align: center; color: red;'>Note:Prediction results are for reference only and do not replace clinical diagnosis. Clinical decisions should be made by physicians.</div><hr>")
+        st.html(f"<div style='font-weight: bold; text-align: center;'>{'Probability of sarcopenic obesity:' if output_index else 'Probability of non-sarcopenic obesity:'} {proba}%.</div><div style='text-align: center; color: red;'>Note:This tool is for reference only and does not replace clinical diagnosis. Clinical decisions should be made by physicians.</div><hr>")
         shap_plot(pred_data, output_index)
         
 if bt:
@@ -145,4 +145,4 @@ else:
     prefun(output)
     
 with st.expander("**System Introduction**", True):
-    st.info("This web-based tool is based on a machine learning model for predicting the risk of sarcopenic obesity in hemodialysis patients. The model integrates five key clinical variables: age, sex, albumin (Alb), fasting blood glucose (FBG), and phase angle (PhA). It provides individualized risk predictions to facilitate early identification of high-risk individuals and to support clinical decision-making.")
+    st.info("This web-based tool is based on a machine learning model for identifying sarcopenic obesity in hemodialysis patients. The model integrates five key clinical variables: age, sex, albumin (Alb), fasting blood glucose (FBG), and phase angle (PhA). It provides an estimated probability of sarcopenic obesity to facilitate clinical assessment and support clinical decision-making.")
